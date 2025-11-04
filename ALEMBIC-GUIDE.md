@@ -49,9 +49,8 @@ alembic history
 
 **Output:**
 ```
-002 -> 003 (head), Seed sample data
-001 -> 002, Initial migration - Create recipe book tables
-<base> -> 001, Create initial schema
+001 -> 002 (head), Seed sample data
+<base> -> 001, Initial migration - Create recipe book tables
 ```
 
 ### 3. Xem migration hiện tại (Giống `liquibase status`)
