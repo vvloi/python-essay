@@ -2,7 +2,7 @@
 # Business Logic Layer - Pantry Service
 from sqlalchemy.orm import Session
 from typing import List, Optional
-from backend.data_layer.repositories import PantryRepository
+from backend.data_layer import PantryRepository
 from backend.models import Pantry
 from backend import schemas
 

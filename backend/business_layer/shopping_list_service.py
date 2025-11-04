@@ -2,7 +2,7 @@
 # Business Logic Layer - Shopping List Service
 from sqlalchemy.orm import Session
 from typing import List
-from backend.data_layer.repositories import RecipeRepository, PantryRepository
+from backend.data_layer import RecipeRepository, PantryRepository
 from backend import schemas
 
 

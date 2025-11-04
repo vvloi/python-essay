@@ -9,12 +9,27 @@ def test_imports():
     """Test that all modules can be imported"""
     try:
         from backend import database, models, schemas, main
-        from backend.data_layer import repositories
-        from backend.business_layer import services
-        from backend.presentation_layer import routes
+        from backend.data_layer import (
+            RecipeRepository, 
+            IngredientRepository, 
+            StepRepository, 
+            PantryRepository
+        )
+        from backend.business_layer import (
+            RecipeService, 
+            PantryService, 
+            ShoppingListService
+        )
+        from backend.presentation_layer import (
+            recipe_controller, 
+            pantry_controller, 
+            shopping_list_controller
+        )
         # Verify modules are imported
         assert database and models and schemas and main
-        assert repositories and services and routes
+        assert RecipeRepository and IngredientRepository and StepRepository and PantryRepository
+        assert RecipeService and PantryService and ShoppingListService
+        assert recipe_controller and pantry_controller and shopping_list_controller
         print("✓ All imports successful")
         return True
     except ImportError as e:

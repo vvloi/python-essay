@@ -2,7 +2,7 @@
 # Business Logic Layer - Recipe Service
 from sqlalchemy.orm import Session
 from typing import List, Optional, Dict
-from backend.data_layer.repositories import (
+from backend.data_layer import (
     RecipeRepository, 
     IngredientRepository, 
     StepRepository
