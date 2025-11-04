@@ -13,8 +13,8 @@ router = APIRouter()
 # Recipe Endpoints
 @router.get("/recipes", response_model=List[schemas.Recipe])
 def get_recipes(
-    skip: int = 0, 
-    limit: int = 100, 
+    skip: int = 0,
+    limit: int = 100,
     db: Session = Depends(get_db)
 ):
     return RecipeService.get_all_recipes(db, skip, limit)
@@ -22,7 +22,7 @@ def get_recipes(
 
 @router.get("/recipes/search", response_model=List[schemas.Recipe])
 def search_recipes(
-    q: str = Query(..., min_length=1), 
+    q: str = Query(..., min_length=1),
     db: Session = Depends(get_db)
 ):
     return RecipeService.search_recipes(db, q)
@@ -43,8 +43,8 @@ def create_recipe(recipe: schemas.RecipeCreate, db: Session = Depends(get_db)):
 
 @router.put("/recipes/{recipe_id}", response_model=schemas.Recipe)
 def update_recipe(
-    recipe_id: int, 
-    recipe: schemas.RecipeUpdate, 
+    recipe_id: int,
+    recipe: schemas.RecipeUpdate,
     db: Session = Depends(get_db)
 ):
     updated_recipe = RecipeService.update_recipe(db, recipe_id, recipe)
@@ -62,8 +62,8 @@ def delete_recipe(recipe_id: int, db: Session = Depends(get_db)):
 
 @router.get("/recipes/{recipe_id}/scale")
 def scale_recipe(
-    recipe_id: int, 
-    factor: float = Query(..., gt=0), 
+    recipe_id: int,
+    factor: float = Query(..., gt=0),
     db: Session = Depends(get_db)
 ):
     scaled = RecipeService.scale_recipe(db, recipe_id, factor)
@@ -93,8 +93,8 @@ def create_pantry_item(pantry: schemas.PantryCreate, db: Session = Depends(get_d
 
 @router.put("/pantry/{pantry_id}", response_model=schemas.Pantry)
 def update_pantry_item(
-    pantry_id: int, 
-    pantry: schemas.PantryUpdate, 
+    pantry_id: int,
+    pantry: schemas.PantryUpdate,
     db: Session = Depends(get_db)
 ):
     updated = PantryService.update_pantry_item(db, pantry_id, pantry)
@@ -113,7 +113,7 @@ def delete_pantry_item(pantry_id: int, db: Session = Depends(get_db)):
 # Shopping List Endpoint
 @router.post("/shopping-list", response_model=List[schemas.ShoppingItem])
 def generate_shopping_list(
-    recipe_ids: List[int], 
+    recipe_ids: List[int],
     db: Session = Depends(get_db)
 ):
     return ShoppingListService.generate_shopping_list(db, recipe_ids)

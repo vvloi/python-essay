@@ -15,7 +15,7 @@ class IngredientCreate(IngredientBase):
 class Ingredient(IngredientBase):
     id: int
     recipe_id: int
-    
+
     class Config:
         from_attributes = True
 
@@ -32,7 +32,7 @@ class StepCreate(StepBase):
 class Step(StepBase):
     id: int
     recipe_id: int
-    
+
     class Config:
         from_attributes = True
 
@@ -66,7 +66,7 @@ class Recipe(RecipeBase):
     id: int
     ingredients: List[Ingredient] = []
     steps: List[Step] = []
-    
+
     class Config:
         from_attributes = True
 
@@ -88,7 +88,7 @@ class PantryUpdate(BaseModel):
 
 class Pantry(PantryBase):
     id: int
-    
+
     class Config:
         from_attributes = True
 

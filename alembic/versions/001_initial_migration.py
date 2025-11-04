@@ -1,7 +1,7 @@
 """Initial migration - Create recipe book tables
 
 Revision ID: 001
-Revises: 
+Revises:
 Create Date: 2025-11-04
 
 """
@@ -75,13 +75,13 @@ def downgrade() -> None:
     op.drop_index(op.f('ix_pantry_name'), table_name='pantry')
     op.drop_index(op.f('ix_pantry_id'), table_name='pantry')
     op.drop_table('pantry')
-    
+
     op.drop_index(op.f('ix_steps_id'), table_name='steps')
     op.drop_table('steps')
-    
+
     op.drop_index(op.f('ix_ingredients_id'), table_name='ingredients')
     op.drop_table('ingredients')
-    
+
     op.drop_index(op.f('ix_recipes_name'), table_name='recipes')
     op.drop_index(op.f('ix_recipes_id'), table_name='recipes')
     op.drop_table('recipes')

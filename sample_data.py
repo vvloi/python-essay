@@ -4,14 +4,13 @@ Run this script to populate database with sample recipes and pantry items
 """
 
 import requests
-import json
 
 BASE_URL = "http://localhost:8000/api"
 
 
 def create_sample_recipes():
     """Create sample Vietnamese recipes"""
-    
+
     recipes = [
         {
             "name": "Phở Bò",
@@ -122,10 +121,10 @@ def create_sample_recipes():
             ]
         }
     ]
-    
+
     print("Creating sample recipes...")
     created_recipes = []
-    
+
     for recipe in recipes:
         try:
             response = requests.post(f"{BASE_URL}/recipes", json=recipe)
@@ -137,13 +136,13 @@ def create_sample_recipes():
                 print(f"✗ Failed to create: {recipe['name']} - {response.text}")
         except Exception as e:
             print(f"✗ Error creating {recipe['name']}: {str(e)}")
-    
+
     return created_recipes
 
 
 def create_sample_pantry():
     """Create sample pantry items"""
-    
+
     pantry_items = [
         {"name": "Fish sauce", "quantity": 500, "unit": "ml"},
         {"name": "Sugar", "quantity": 1, "unit": "kg"},
@@ -156,9 +155,9 @@ def create_sample_pantry():
         {"name": "Vegetable oil", "quantity": 1, "unit": "L"},
         {"name": "Eggs", "quantity": 12, "unit": "pieces"}
     ]
-    
+
     print("\nCreating sample pantry items...")
-    
+
     for item in pantry_items:
         try:
             response = requests.post(f"{BASE_URL}/pantry", json=item)
@@ -176,20 +175,20 @@ def main():
     print("Recipe Book - Sample Data Generator")
     print("=" * 60)
     print("\nMake sure the server is running at http://localhost:8000\n")
-    
+
     try:
         # Test connection
         response = requests.get(f"{BASE_URL}/health")
         if response.status_code != 200:
             print("✗ Server is not responding. Please start the server first.")
             return
-        
+
         print("✓ Server is running\n")
-        
+
         # Create sample data
         recipes = create_sample_recipes()
         create_sample_pantry()
-        
+
         print("\n" + "=" * 60)
         print(f"✓ Successfully created {len(recipes)} recipes")
         print("✓ Successfully populated pantry")
@@ -199,7 +198,7 @@ def main():
         print("2. Select recipes and generate shopping list")
         print("3. View pantry items")
         print("\nEnjoy testing the Recipe Book app! 🍜")
-        
+
     except requests.exceptions.ConnectionError:
         print("✗ Cannot connect to server. Please start the server first:")
         print("  uvicorn backend.main:app --reload --host 0.0.0.0 --port 8000")
