@@ -8,7 +8,6 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
 from backend.database import Base
-from backend.models import Recipe, Ingredient, Step, Pantry
 
 # Alembic Config object
 config = context.config
@@ -45,7 +44,7 @@ def run_migrations_online() -> None:
 
     with connectable.connect() as connection:
         context.configure(
-            connection=connection, 
+            connection=connection,
             target_metadata=target_metadata
         )
 
