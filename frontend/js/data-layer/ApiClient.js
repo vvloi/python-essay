@@ -1,5 +1,5 @@
 // Frontend 3-Layer Architecture
-// Data Layer - API Communication
+// Data Layer - API Client Base Class
 
 const API_BASE_URL = '/api';
 
@@ -53,27 +53,4 @@ class ApiClient {
 
 const apiClient = new ApiClient();
 
-// Recipe API
-const RecipeAPI = {
-    getAll: (skip = 0, limit = 100) => apiClient.get(`/recipes?skip=${skip}&limit=${limit}`),
-    getById: (id) => apiClient.get(`/recipes/${id}`),
-    search: (query) => apiClient.get(`/recipes/search?q=${encodeURIComponent(query)}`),
-    create: (data) => apiClient.post('/recipes', data),
-    update: (id, data) => apiClient.put(`/recipes/${id}`, data),
-    delete: (id) => apiClient.delete(`/recipes/${id}`),
-    scale: (id, factor) => apiClient.get(`/recipes/${id}/scale?factor=${factor}`),
-};
-
-// Pantry API
-const PantryAPI = {
-    getAll: () => apiClient.get('/pantry'),
-    getById: (id) => apiClient.get(`/pantry/${id}`),
-    create: (data) => apiClient.post('/pantry', data),
-    update: (id, data) => apiClient.put(`/pantry/${id}`, data),
-    delete: (id) => apiClient.delete(`/pantry/${id}`),
-};
-
-// Shopping List API
-const ShoppingListAPI = {
-    generate: (recipeIds) => apiClient.post('/shopping-list', recipeIds),
-};
+export { apiClient };

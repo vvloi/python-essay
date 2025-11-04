@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from backend.presentation_layer.routes import router
+from backend.presentation_layer import recipe_controller, pantry_controller, shopping_list_controller
 
 # NOTE: Database tables are managed by Alembic migrations
 # Run: alembic upgrade head
@@ -22,8 +22,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# API routes
-app.include_router(router, prefix="/api", tags=["recipes"])
+# API routes - separate controllers for better organization
+app.include_router(recipe_controller.router, prefix="/api")
+app.include_router(pantry_controller.router, prefix="/api")
+app.include_router(shopping_list_controller.router, prefix="/api")
 
 # Serve frontend static files
 app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
