@@ -63,6 +63,8 @@ db.sqlite3-journal
 
 # SQLite database files
 recipe_book.db
+recipe.db
+*.db
 
 # Flask stuff:
 instance/
