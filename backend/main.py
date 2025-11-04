@@ -1,11 +1,11 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from backend.database import engine, Base
 from backend.presentation_layer.routes import router
 
-# Create database tables
-Base.metadata.create_all(bind=engine)
+# NOTE: Database tables are managed by Alembic migrations
+# Run: alembic upgrade head
+# This is similar to Liquibase changesets
 
 app = FastAPI(
     title="Recipe Book API",
