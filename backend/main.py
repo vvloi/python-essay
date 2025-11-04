@@ -3,9 +3,10 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from backend.presentation_layer.routes import router
 
-# NOTE: Database tables are managed by Alembic migrations
-# Run: alembic upgrade head
-# This is similar to Liquibase changesets
+# NOTE: Database tables are managed by Alembic migrations.
+# Automatic table creation has been removed to prevent inconsistencies and ensure proper migration tracking.
+# Relying on migrations (similar to Liquibase changesets) allows for reliable schema management in production environments.
+# To apply migrations, run: alembic upgrade head
 
 app = FastAPI(
     title="Recipe Book API",
