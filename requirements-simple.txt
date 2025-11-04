@@ -1,0 +1,9 @@
+# Minimal requirements - install latest stable versions
+fastapi
+uvicorn[standard]
+sqlalchemy
+alembic
+python-dotenv
+pydantic
+pydantic-settings
+requests

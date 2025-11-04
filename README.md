@@ -1,2 +1,356 @@
-# python-essay
-python eassy CN1.K2024.1 Nhóm 3
+# Recipe Book Web Application
+
+## 📚 Overview
+A full-stack Recipe Book application built with Python (FastAPI) for backend and vanilla JavaScript for frontend, implementing **3-Layer Architecture** pattern for both sides.
+
+## 🏗️ Architecture
+
+### Backend (3-Layer Architecture)
+```
+backend/
+├── data_layer/          # Data Access Layer
+│   └── repositories.py  # Database operations (CRUD)
+├── business_layer/      # Business Logic Layer
+│   └── services.py      # Business rules & data processing
+├── presentation_layer/  # Presentation Layer
+│   └── routes.py        # API endpoints (REST controllers)
+├── database.py          # Database configuration
+├── models.py            # SQLAlchemy ORM models
+├── schemas.py           # Pydantic data validation schemas
+└── main.py              # Application entry point
+```
+
+**Layers:**
+1. **Data Layer (Repositories)**: Direct database access, raw CRUD operations
+2. **Business Layer (Services)**: Business logic, data transformation, orchestration
+3. **Presentation Layer (Routes/Controllers)**: HTTP request/response handling, API endpoints
+
+### Frontend (3-Layer Architecture)
+```
+frontend/
+├── js/
+│   ├── data-layer/         # Data Access Layer
+│   │   └── api.js          # HTTP API calls
+│   ├── business-layer/     # Business Logic Layer
+│   │   └── services.js     # State management & business rules
+│   └── presentation-layer/ # Presentation Layer
+│       └── ui-controller.js # DOM manipulation & event handling
+├── css/
+│   └── styles.css          # Application styles
+└── index.html              # Main HTML structure
+```
+
+**Layers:**
+1. **Data Layer (API)**: HTTP communication with backend
+2. **Business Layer (Services)**: State management, data processing, business rules
+3. **Presentation Layer (UI Controller)**: DOM manipulation, event handling, user interaction
+
+### Database Migration (Alembic)
+```
+alembic/
+├── versions/
+│   └── 001_initial_migration.py  # Initial schema
+├── env.py                         # Alembic environment config
+└── script.py.mako                 # Migration template
+```
+
+**Alembic** is the Liquibase equivalent for Python/SQLAlchemy:
+- Version-controlled database schema
+- Automatic migration generation
+- Rollback capability
+- Database-agnostic DDL
+
+## 🗄️ Database Schema (CSDL)
+
+### Tables
+- **recipes**: Recipe information (name, description, cuisine, servings, times)
+- **ingredients**: Recipe ingredients (name, quantity, unit)
+- **steps**: Cooking steps (step_number, instruction)
+- **pantry**: Pantry inventory (name, quantity, unit)
+
+### Relationships
+- `recipes` ← one-to-many → `ingredients`
+- `recipes` ← one-to-many → `steps`
+
+## ✨ Features (Chức năng)
+
+### 📖 Recipe Management
+- ✅ Create, Read, Update, Delete recipes
+- ✅ Add multiple ingredients and steps
+- ✅ Search recipes by name (FTS5-like search)
+- ✅ Scale recipes (adjust ingredient quantities)
+- ✅ Recipe details with servings, prep/cook time
+
+### 🏪 Pantry Management
+- ✅ Track available ingredients
+- ✅ Add/update/delete pantry items
+- ✅ Automatic quantity aggregation
+
+### 🛒 Shopping List
+- ✅ Select multiple recipes
+- ✅ Generate shopping list
+- ✅ Subtract pantry items from needed ingredients
+- ✅ Export shopping list to text file
+
+### 🔍 Search
+- ✅ Real-time recipe search
+- ✅ Search by recipe name (SQL LIKE-based, similar to FTS5)
+
+## 🚀 Setup & Installation
+
+### Prerequisites
+- Python 3.8+
+- pip (Python package manager)
+
+### Installation Steps
+
+1. **Clone or navigate to project directory**
+   ```powershell
+   cd e:\sources\python-essay
+   ```
+
+2. **Create virtual environment**
+   ```powershell
+   python -m venv venv
+   ```
+
+3. **Activate virtual environment**
+   ```powershell
+   .\venv\Scripts\Activate.ps1
+   ```
+
+4. **Install dependencies**
+   ```powershell
+   pip install -r requirements.txt
+   ```
+
+5. **Initialize database with Alembic**
+   ```powershell
+   # Run migrations
+   alembic upgrade head
+   ```
+
+6. **Run the application**
+   ```powershell
+   uvicorn backend.main:app --reload --host 0.0.0.0 --port 8000
+   ```
+
+7. **Access the application**
+   - Frontend: http://localhost:8000
+   - API Docs: http://localhost:8000/docs
+   - Health Check: http://localhost:8000/api/health
+
+## 📁 Project Structure
+
+```
+python-essay/
+├── backend/                          # Backend application
+│   ├── data_layer/                   # Data Access Layer
+│   │   ├── __init__.py
+│   │   └── repositories.py           # Repository pattern (CRUD)
+│   ├── business_layer/               # Business Logic Layer
+│   │   ├── __init__.py
+│   │   └── services.py               # Services (business rules)
+│   ├── presentation_layer/           # Presentation Layer
+│   │   ├── __init__.py
+│   │   └── routes.py                 # API routes (controllers)
+│   ├── __init__.py
+│   ├── database.py                   # Database configuration
+│   ├── models.py                     # SQLAlchemy models
+│   ├── schemas.py                    # Pydantic schemas
+│   └── main.py                       # FastAPI app entry point
+├── frontend/                         # Frontend application
+│   ├── js/
+│   │   ├── data-layer/               # Data Access Layer
+│   │   │   └── api.js                # API communication
+│   │   ├── business-layer/           # Business Logic Layer
+│   │   │   └── services.js           # State & business logic
+│   │   └── presentation-layer/       # Presentation Layer
+│   │       └── ui-controller.js      # UI control & events
+│   ├── css/
+│   │   └── styles.css                # Styling
+│   └── index.html                    # Main HTML
+├── alembic/                          # Database migrations
+│   ├── versions/
+│   │   └── 001_initial_migration.py  # Initial schema
+│   ├── env.py                        # Alembic environment
+│   └── script.py.mako                # Migration template
+├── alembic.ini                       # Alembic configuration
+├── requirements.txt                  # Python dependencies
+├── .env                              # Environment variables
+└── README.md                         # This file
+```
+
+## 🔧 API Endpoints
+
+### Recipes
+- `GET /api/recipes` - Get all recipes
+- `GET /api/recipes/{id}` - Get recipe by ID
+- `GET /api/recipes/search?q={query}` - Search recipes
+- `POST /api/recipes` - Create recipe
+- `PUT /api/recipes/{id}` - Update recipe
+- `DELETE /api/recipes/{id}` - Delete recipe
+- `GET /api/recipes/{id}/scale?factor={factor}` - Scale recipe
+
+### Pantry
+- `GET /api/pantry` - Get all pantry items
+- `GET /api/pantry/{id}` - Get pantry item by ID
+- `POST /api/pantry` - Add pantry item
+- `PUT /api/pantry/{id}` - Update pantry item
+- `DELETE /api/pantry/{id}` - Delete pantry item
+
+### Shopping List
+- `POST /api/shopping-list` - Generate shopping list (body: array of recipe IDs)
+
+### Health
+- `GET /api/health` - Health check
+
+## 🧪 Testing the Application
+
+### Create a Recipe
+1. Click "Add Recipe" button
+2. Fill in recipe details:
+   - Name: "Phở Bò"
+   - Cuisine: "Vietnamese"
+   - Servings: 4
+   - Prep time: 30 minutes
+   - Cook time: 60 minutes
+3. Add ingredients:
+   - Beef: 500g
+   - Rice noodles: 400g
+   - Broth: 2L
+4. Add steps:
+   1. Prepare broth
+   2. Cook beef
+   3. Prepare noodles
+5. Click "Save Recipe"
+
+### Generate Shopping List
+1. Select multiple recipes (checkbox)
+2. Navigate to "Shopping List" tab
+3. Click "Generate List"
+4. Click "Export" to download as text file
+
+## 🛠️ Database Management with Alembic
+
+### Create New Migration
+```powershell
+alembic revision -m "description of changes"
+```
+
+### Run Migrations (Upgrade)
+```powershell
+alembic upgrade head
+```
+
+### Rollback Migration (Downgrade)
+```powershell
+alembic downgrade -1
+```
+
+### View Migration History
+```powershell
+alembic history
+```
+
+### Check Current Version
+```powershell
+alembic current
+```
+
+## 🎯 Design Principles Applied
+
+### Backend Principles
+1. **Separation of Concerns**: Each layer has distinct responsibility
+2. **Dependency Injection**: Database session injected via FastAPI Depends
+3. **Repository Pattern**: Abstracted data access in repository layer
+4. **Service Layer**: Business logic isolated from HTTP concerns
+5. **Schema Validation**: Pydantic for request/response validation
+6. **Type Hints**: Full type annotations for better IDE support
+
+### Frontend Principles
+1. **Single Responsibility**: Each layer handles specific concerns
+2. **State Management**: Centralized state with observer pattern
+3. **API Abstraction**: HTTP logic separated from business logic
+4. **Event-Driven**: UI updates triggered by state changes
+5. **Modularity**: Clean separation of concerns across files
+
+### Code Quality
+- ✅ Minimal if-else nesting (strategy pattern, early returns)
+- ✅ Clear function names
+- ✅ Single responsibility per function
+- ✅ DRY (Don't Repeat Yourself)
+- ✅ Explicit error handling
+
+## 📝 Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+DATABASE_URL=sqlite:///./recipe_book.db
+HOST=0.0.0.0
+PORT=8000
+```
+
+For PostgreSQL:
+```env
+DATABASE_URL=postgresql://user:password@localhost/recipe_book
+```
+
+## 🔒 Security Notes
+
+- Input validation via Pydantic schemas
+- SQL injection protection via SQLAlchemy ORM
+- XSS protection via proper HTML escaping in frontend
+- CORS enabled for development (configure for production)
+
+## 📦 Dependencies
+
+### Backend
+- **FastAPI**: Modern web framework
+- **Uvicorn**: ASGI server
+- **SQLAlchemy**: ORM for database operations
+- **Alembic**: Database migration tool
+- **Pydantic**: Data validation
+- **python-dotenv**: Environment variable management
+
+### Frontend
+- Vanilla JavaScript (ES6+)
+- No framework dependencies
+- Modern browser required (ES6 support)
+
+## 🚀 Production Deployment
+
+1. Update `.env` with production database URL
+2. Set `DEBUG=False` in configuration
+3. Use production-grade ASGI server (Gunicorn + Uvicorn workers)
+4. Configure proper CORS origins
+5. Enable HTTPS
+6. Use PostgreSQL or MySQL instead of SQLite
+
+Example production command:
+```bash
+gunicorn backend.main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
+```
+
+## 📚 Additional Resources
+
+- [FastAPI Documentation](https://fastapi.tiangolo.com/)
+- [SQLAlchemy Documentation](https://docs.sqlalchemy.org/)
+- [Alembic Documentation](https://alembic.sqlalchemy.org/)
+- [Pydantic Documentation](https://docs.pydantic.dev/)
+
+## 🤝 Contributing
+
+This is an educational project demonstrating 3-layer architecture. Feel free to fork and modify!
+
+## 📄 License
+
+MIT License - Free to use for educational purposes.
+
+---
+
+**Built with 3-Layer Architecture** 🏗️
+- Clean separation of concerns
+- Maintainable and testable code
+- Scalable design patterns
