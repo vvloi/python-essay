@@ -10,32 +10,31 @@
                              │ HTTP Requests
                              ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                    FRONTEND (JavaScript)                         │
+│              FRONTEND (React + TypeScript)                       │
 ├─────────────────────────────────────────────────────────────────┤
 │  ┌─────────────────────────────────────────────────────────┐   │
-│  │  PRESENTATION LAYER (ui-controller.js)                  │   │
-│  │  • DOM Manipulation                                     │   │
-│  │  • Event Handlers                                       │   │
-│  │  • View Rendering                                       │   │
-│  │  • User Interaction                                     │   │
+│  │  PRESENTATION LAYER (React Components - TSX)           │   │
+│  │  • RecipeList.tsx                                      │   │
+│  │  • Pantry.tsx                                          │   │
+│  │  • ShoppingList.tsx                                    │   │
+│  │  • React Hooks (useState, useEffect)                   │   │
+│  │  • User Interaction & View Rendering                   │   │
 │  └────────────────┬────────────────────────────────────────┘   │
 │                   │                                             │
 │  ┌────────────────▼────────────────────────────────────────┐   │
-│  │  BUSINESS LAYER (services.js)                          │   │
-│  │  • State Management (StateManager)                     │   │
-│  │  • RecipeService                                       │   │
-│  │  • PantryService                                       │   │
-│  │  • ShoppingListService                                 │   │
+│  │  BUSINESS LAYER (StateManager.ts)                      │   │
+│  │  • StateManager (Observer Pattern)                     │   │
+│  │  • State Management with TypeScript types             │   │
 │  │  • Business Logic & Data Processing                   │   │
 │  └────────────────┬────────────────────────────────────────┘   │
 │                   │                                             │
 │  ┌────────────────▼────────────────────────────────────────┐   │
-│  │  DATA LAYER (api.js)                                   │   │
-│  │  • ApiClient                                           │   │
-│  │  • RecipeAPI                                           │   │
-│  │  • PantryAPI                                           │   │
-│  │  • ShoppingListAPI                                     │   │
-│  │  • HTTP Communication                                  │   │
+│  │  DATA LAYER (API Clients - TS)                        │   │
+│  │  • ApiClient.ts                                        │   │
+│  │  • RecipeAPI.ts                                        │   │
+│  │  • PantryAPI.ts                                        │   │
+│  │  • ShoppingListAPI.ts                                  │   │
+│  │  • HTTP Communication (fetch)                          │   │
 │  └────────────────┬────────────────────────────────────────┘   │
 └───────────────────┼─────────────────────────────────────────────┘
                     │
@@ -109,18 +108,20 @@
 1. USER INTERACTION
    └─> User fills form and clicks "Save Recipe"
    
-2. FRONTEND PRESENTATION LAYER (ui-controller.js)
-   └─> handleRecipeSubmit() collects form data
+2. FRONTEND PRESENTATION LAYER (React Component)
+   └─> RecipeList.tsx handleSubmit() collects form data
+       • React state (useState) manages form
+       • TypeScript types validate data
    
-3. FRONTEND BUSINESS LAYER (services.js)
-   └─> RecipeService.createRecipe(recipeData)
-       • Validates data
-       • Updates state
+3. FRONTEND BUSINESS LAYER (StateManager.ts)
+   └─> StateManager.setState(newRecipe)
+       • Updates centralized state
+       • Notifies all subscribers
    
-4. FRONTEND DATA LAYER (api.js)
+4. FRONTEND DATA LAYER (RecipeAPI.ts)
    └─> RecipeAPI.create(data)
        • POST /api/recipes
-       • Sends JSON payload
+       • Sends JSON payload with type safety
    
 5. BACKEND PRESENTATION LAYER (routes.py)
    └─> @router.post("/recipes")
@@ -181,13 +182,13 @@ Backend:
 └── data_layer/
     └── repositories.py     ➡️  Database access
 
-Frontend:
-├── presentation-layer/
-│   └── ui-controller.js    ➡️  UI & events
-├── business-layer/
-│   └── services.js         ➡️  State & logic
-└── data-layer/
-    └── api.js              ➡️  HTTP calls
+Frontend (React + TypeScript):
+├── src/components/
+│   └── *.tsx               ➡️  React components (UI)
+├── src/business/
+│   └── StateManager.ts     ➡️  State management
+└── src/data/
+    └── *API.ts             ➡️  HTTP API clients
 ```
 
 ## 🔐 Security Flow

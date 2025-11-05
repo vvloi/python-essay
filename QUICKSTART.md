@@ -1,40 +1,62 @@
 # Quick Start Guide - Recipe Book
 
-## 🚀 Chạy ứng dụng ngay (5 bước đơn giản)
+## 🚀 Chạy ứng dụng ngay (Backend + Frontend)
 
-### 1. Tạo Virtual Environment
+### Backend Setup (Python)
+
+#### 1. Tạo và kích hoạt Virtual Environment
 ```powershell
 python -m venv venv
-```
-
-### 2. Kích hoạt Virtual Environment
-```powershell
 .\venv\Scripts\Activate.ps1
 ```
 
-### 3. Cài đặt dependencies
+#### 2. Cài đặt Python dependencies
 ```powershell
 pip install -r requirements.txt
 ```
 
-### 4. Chạy database migration (Giống Liquibase update)
+#### 3. Chạy database migration (Giống Liquibase update)
 ```powershell
 # Tạo tables + insert sample data
 alembic upgrade head
-
-# Xem chi tiết: ALEMBIC-GUIDE.md
 ```
 
-### 5. Chạy ứng dụng
+#### 4. Chạy backend server
 ```powershell
 uvicorn backend.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
+### Frontend Setup (React + TypeScript)
+
+#### 5. Cài đặt Node dependencies
+```powershell
+cd frontend
+npm install
+```
+
+#### 6. Chạy frontend dev server (development)
+```powershell
+npm run dev
+# Frontend sẽ chạy tại http://localhost:5173
+```
+
+**HOẶC** build production (backend sẽ serve):
+```powershell
+npm run build
+# Backend sẽ tự động serve frontend/dist tại http://localhost:8000
+```
+
 ## ✅ Truy cập ứng dụng
 
-- **Frontend**: http://localhost:8000
+### Development Mode
+- **Frontend Dev (Vite)**: http://localhost:5173
+- **Backend API**: http://localhost:8000
 - **API Docs (Swagger)**: http://localhost:8000/docs
 - **Health Check**: http://localhost:8000/api/health
+
+### Production Mode (sau khi `npm run build`)
+- **Frontend + Backend**: http://localhost:8000
+- **API Docs**: http://localhost:8000/docs
 
 ## 📝 Thử nghiệm nhanh
 
@@ -72,13 +94,13 @@ uvicorn backend.main:app --reload --host 0.0.0.0 --port 8000
 📁 Presentation Layer (routes.py)
 ```
 
-### Frontend
+### Frontend (React + TypeScript)
 ```
-📁 Data Layer (api.js)
+📁 Data Layer (src/data/*API.ts)
    ↓
-📁 Business Layer (services.js)
+📁 Business Layer (src/business/StateManager.ts)
    ↓
-📁 Presentation Layer (ui-controller.js)
+📁 Presentation Layer (src/components/*.tsx - React)
 ```
 
 ## 🗄️ Database Migration (Alembic)

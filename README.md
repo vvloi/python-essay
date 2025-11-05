@@ -1,7 +1,7 @@
 # Recipe Book Web Application
 
 ## 📚 Overview
-A full-stack Recipe Book application built with Python (FastAPI) for backend and vanilla JavaScript for frontend, implementing **3-Layer Architecture** pattern for both sides.
+A full-stack Recipe Book application built with **Python (FastAPI)** for backend and **React + TypeScript + TailwindCSS** for frontend, implementing **3-Layer Architecture** pattern for both sides.
 
 ## 🏗️ Architecture
 
@@ -28,22 +28,32 @@ backend/
 ### Frontend (3-Layer Architecture)
 ```
 frontend/
-├── js/
-│   ├── data-layer/         # Data Access Layer
-│   │   └── api.js          # HTTP API calls
-│   ├── business-layer/     # Business Logic Layer
-│   │   └── services.js     # State management & business rules
-│   └── presentation-layer/ # Presentation Layer
-│       └── ui-controller.js # DOM manipulation & event handling
-├── css/
-│   └── styles.css          # Application styles
-└── index.html              # Main HTML structure
+├── src/
+│   ├── data/               # Data Access Layer
+│   │   ├── ApiClient.ts    # HTTP client
+│   │   ├── RecipeAPI.ts    # Recipe endpoints
+│   │   ├── PantryAPI.ts    # Pantry endpoints
+│   │   └── ShoppingListAPI.ts
+│   ├── business/           # Business Logic Layer
+│   │   └── StateManager.ts # State management
+│   ├── components/         # Presentation Layer
+│   │   ├── RecipeList.tsx  # Recipe component
+│   │   ├── Pantry.tsx      # Pantry component
+│   │   └── ShoppingList.tsx
+│   ├── App.tsx             # Main app component
+│   ├── main.tsx            # App entry point
+│   ├── index.scss          # Tailwind + custom styles
+│   └── types.ts            # TypeScript types
+├── package.json            # Node dependencies
+├── tsconfig.json           # TypeScript config
+├── vite.config.js          # Vite bundler config
+└── tailwind.config.cjs     # Tailwind config
 ```
 
 **Layers:**
-1. **Data Layer (API)**: HTTP communication with backend
+1. **Data Layer (API)**: HTTP communication with backend using TypeScript
 2. **Business Layer (Services)**: State management, data processing, business rules
-3. **Presentation Layer (UI Controller)**: DOM manipulation, event handling, user interaction
+3. **Presentation Layer (Components)**: React components with TSX, user interaction
 
 ### Database Migration (Alembic)
 ```
@@ -100,45 +110,59 @@ alembic/
 
 ### Prerequisites
 - Python 3.8+
-- pip (Python package manager)
+- Node.js 16+ (for frontend)
+- npm or yarn (Node package manager)
 
-### Installation Steps
+### Backend Setup
 
-1. **Clone or navigate to project directory**
-   ```powershell
-   cd e:\sources\python-essay
-   ```
-
-2. **Create virtual environment**
+1. **Create and activate virtual environment**
    ```powershell
    python -m venv venv
-   ```
-
-3. **Activate virtual environment**
-   ```powershell
    .\venv\Scripts\Activate.ps1
    ```
 
-4. **Install dependencies**
+2. **Install Python dependencies**
    ```powershell
    pip install -r requirements.txt
    ```
 
-5. **Initialize database with Alembic**
+3. **Initialize database with Alembic**
    ```powershell
-   # Run migrations
    alembic upgrade head
    ```
 
-6. **Run the application**
+4. **Run the backend server**
    ```powershell
    uvicorn backend.main:app --reload --host 0.0.0.0 --port 8000
    ```
 
-7. **Access the application**
-   - Frontend: http://localhost:8000
-   - API Docs: http://localhost:8000/docs
-   - Health Check: http://localhost:8000/api/health
+### Frontend Setup
+
+1. **Navigate to frontend directory**
+   ```powershell
+   cd frontend
+   ```
+
+2. **Install Node dependencies**
+   ```powershell
+   npm install
+   ```
+
+3. **Run development server** (for development)
+   ```powershell
+   npm run dev
+   ```
+
+4. **Build for production** (backend will serve this)
+   ```powershell
+   npm run build
+   ```
+
+### Access the Application
+- **Frontend Dev**: http://localhost:5173 (Vite dev server)
+- **Frontend Prod**: http://localhost:8000 (served by backend after `npm run build`)
+- **API Docs**: http://localhost:8000/docs
+- **Health Check**: http://localhost:8000/api/health
 
 ## 📁 Project Structure
 
@@ -269,11 +293,12 @@ alembic current
 6. **Type Hints**: Full type annotations for better IDE support
 
 ### Frontend Principles
-1. **Single Responsibility**: Each layer handles specific concerns
-2. **State Management**: Centralized state with observer pattern
-3. **API Abstraction**: HTTP logic separated from business logic
-4. **Event-Driven**: UI updates triggered by state changes
-5. **Modularity**: Clean separation of concerns across files
+1. **Component-Based Architecture**: React components for reusability
+2. **Type Safety**: TypeScript for compile-time error detection
+3. **State Management**: Centralized state with observer pattern
+4. **API Abstraction**: HTTP logic separated from business logic
+5. **Utility-First CSS**: TailwindCSS for rapid UI development
+6. **Modularity**: Clear 3-layer separation in React app
 
 ### Code Quality
 - ✅ Minimal if-else nesting (strategy pattern, early returns)
@@ -315,12 +340,15 @@ DATABASE_URL=postgresql://user:password@localhost/recipe_book
 - **python-dotenv**: Environment variable management
 
 ### Frontend
-- Vanilla JavaScript (ES6+)
-- No framework dependencies
-- Modern browser required (ES6 support)
+- **React 18+**: Component-based UI framework
+- **TypeScript 5+**: Type-safe JavaScript
+- **Vite 5+**: Fast build tool and dev server
+- **TailwindCSS 3+**: Utility-first CSS framework
+- **SCSS**: CSS preprocessor with Tailwind integration
 
 ## 🚀 Production Deployment
 
+### Backend
 1. Update `.env` with production database URL
 2. Set `DEBUG=False` in configuration
 3. Use production-grade ASGI server (Gunicorn + Uvicorn workers)
@@ -332,6 +360,17 @@ Example production command:
 ```bash
 gunicorn backend.main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
 ```
+
+### Frontend
+1. Build the production bundle:
+   ```powershell
+   cd frontend
+   npm run build
+   ```
+2. The `frontend/dist` folder will be automatically served by the backend
+3. For separate frontend hosting (CDN/Netlify/Vercel):
+   - Update API base URL in `ApiClient.ts`
+   - Deploy `dist` folder to hosting service
 
 ## 📚 Additional Resources
 
