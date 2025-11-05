@@ -7,48 +7,48 @@ A full-stack Recipe Book application built with **Python (FastAPI)** for backend
 
 Read the documentation in this order:
 
-1. **[01-README.md](./01-README.md)** ⬅️ You are here
+1. **[README.md](./README.md)** ⬅️ You are here
    - Project overview and architecture
    - Technology stack
    - Features and database schema
 
-2. **[02-QUICKSTART.md](./02-QUICKSTART.md)** 🚀
+2. **[01-QUICKSTART.md](./01-QUICKSTART.md)** 🚀
    - Quick installation guide
    - Setup instructions for both backend and frontend
    - First-time setup commands
 
-3. **[03-RUN-GUIDE.md](./03-RUN-GUIDE.md)** ▶️
+3. **[02-RUN-GUIDE.md](./02-RUN-GUIDE.md)** ▶️
    - How to run the application
    - Backend server commands
    - Frontend dev server commands
    - Production build steps
 
-4. **[04-ARCHITECTURE.md](./04-ARCHITECTURE.md)** 🏗️
+4. **[03-ARCHITECTURE.md](./03-ARCHITECTURE.md)** 🏗️
    - Detailed architecture explanation
    - Layer responsibilities
    - Design patterns and best practices
 
-5. **[05-3-LAYER-EXPLAINED.md](./05-3-LAYER-EXPLAINED.md)** 📚
+5. **[04-3-LAYER-EXPLAINED.md](./04-3-LAYER-EXPLAINED.md)** 📚
    - Deep dive into 3-Layer Architecture
    - Layer separation principles
    - Code examples for each layer
 
-6. **[06-ALEMBIC-GUIDE.md](./06-ALEMBIC-GUIDE.md)** 🔄
+6. **[05-ALEMBIC-GUIDE.md](./05-ALEMBIC-GUIDE.md)** 🔄
    - Database migration guide
    - Alembic commands and workflow
    - Creating and applying migrations
 
-7. **[07-MIGRATION-SUMMARY.md](./07-MIGRATION-SUMMARY.md)** 📝
+7. **[06-MIGRATION-SUMMARY.md](./06-MIGRATION-SUMMARY.md)** 📝
    - Summary of all migrations
    - Migration history and changes
    - Database version tracking
 
-8. **[08-PROJECT-SUMMARY.md](./08-PROJECT-SUMMARY.md)** 📊
+8. **[07-PROJECT-SUMMARY.md](./07-PROJECT-SUMMARY.md)** 📊
    - Project development summary
    - Implementation timeline
    - Key decisions and learnings
 
-9. **[09-TESTING.md](./09-TESTING.md)** ✅
+9. **[08-TESTING.md](./08-TESTING.md)** ✅
    - Testing guide and strategy
    - Unit tests and integration tests
    - How to run tests
