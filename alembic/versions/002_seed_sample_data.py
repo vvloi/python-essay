@@ -103,11 +103,12 @@ def upgrade() -> None:
 
     # Insert recipes and their related data
     for recipe_data in recipes:
-        # Insert recipe and get its ID using lastrowid for SQLite compatibility
+        # Insert recipe and get its ID using RETURNING for PostgreSQL compatibility
         result = conn.execute(
             sa.text("""
                 INSERT INTO recipes (name, description, cuisine, servings, prep_time_minutes, cook_time_minutes)
                 VALUES (:name, :description, :cuisine, :servings, :prep_time_minutes, :cook_time_minutes)
+                RETURNING id
             """),
             {
                 'name': recipe_data['name'],
@@ -118,7 +119,7 @@ def upgrade() -> None:
                 'cook_time_minutes': recipe_data['cook_time_minutes'],
             }
         )
-        recipe_id = result.lastrowid
+        recipe_id = result.fetchone()[0]
 
         # Insert ingredients
         for name, quantity, unit in recipe_data['ingredients']:

@@ -362,14 +362,9 @@ alembic current
 Create a `.env` file in the root directory:
 
 ```env
-DATABASE_URL=sqlite:///./recipe_book.db
+DATABASE_URL=postgresql://postgres:changeme@postgres.core-infra.svc.cluster.local:5432/recipe_book
 HOST=0.0.0.0
 PORT=8000
-```
-
-For PostgreSQL:
-```env
-DATABASE_URL=postgresql://user:password@localhost/recipe_book
 ```
 
 ## 🔒 Security Notes
@@ -404,7 +399,6 @@ DATABASE_URL=postgresql://user:password@localhost/recipe_book
 3. Use production-grade ASGI server (Gunicorn + Uvicorn workers)
 4. Configure proper CORS origins
 5. Enable HTTPS
-6. Use PostgreSQL or MySQL instead of SQLite
 
 Example production command:
 ```bash
