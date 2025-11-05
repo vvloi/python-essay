@@ -27,7 +27,6 @@ jobs:
       run: |
         pip install ruff
         ruff check .
-      continue-on-error: true
     
     - name: Check Python syntax
       run: |
@@ -55,7 +54,6 @@ jobs:
         curl -f http://localhost:8000/api/health || exit 1
         kill $SERVER_PID 2>/dev/null || true
         wait $SERVER_PID 2>/dev/null || true
-      continue-on-error: true
     
     - name: Run sample data script
       run: |
@@ -72,4 +70,3 @@ jobs:
         python sample_data.py || echo "Sample data script needs server running"
         kill $SERVER_PID 2>/dev/null || true
         wait $SERVER_PID 2>/dev/null || true
-      continue-on-error: true
