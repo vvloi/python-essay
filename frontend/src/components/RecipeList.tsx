@@ -19,8 +19,12 @@ export default function RecipeList() {
           <li key={r.id} className="border-b py-2">
             <div className="flex justify-between">
               <div>
-                <div className="font-medium">{r.title}</div>
-                <div className="text-sm text-gray-600">Serves: {r.servings}</div>
+                <div className="font-medium">{r.name}</div>
+                <div className="text-sm text-gray-600">
+                  {r.cuisine && <span className="text-blue-600">{r.cuisine}</span>}
+                  {r.cuisine && ' • '}
+                  Serves: {r.servings}
+                </div>
               </div>
             </div>
           </li>
