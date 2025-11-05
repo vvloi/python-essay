@@ -42,8 +42,8 @@ class RecipeBase(BaseModel):
     description: Optional[str] = None
     cuisine: Optional[str] = Field(None, max_length=100)
     servings: int = Field(default=1, gt=0)
-    prep_time_minutes: Optional[int] = Field(None, gt=0)
-    cook_time_minutes: Optional[int] = Field(None, gt=0)
+    prep_time_minutes: Optional[int] = Field(None, ge=0)
+    cook_time_minutes: Optional[int] = Field(None, ge=0)
 
 
 class RecipeCreate(RecipeBase):
@@ -56,8 +56,8 @@ class RecipeUpdate(BaseModel):
     description: Optional[str] = None
     cuisine: Optional[str] = Field(None, max_length=100)
     servings: Optional[int] = Field(None, gt=0)
-    prep_time_minutes: Optional[int] = Field(None, gt=0)
-    cook_time_minutes: Optional[int] = Field(None, gt=0)
+    prep_time_minutes: Optional[int] = Field(None, ge=0)
+    cook_time_minutes: Optional[int] = Field(None, ge=0)
     ingredients: Optional[List[IngredientCreate]] = None
     steps: Optional[List[StepCreate]] = None
 

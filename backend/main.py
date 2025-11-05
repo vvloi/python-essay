@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from backend.presentation_layer import recipe_controller, pantry_controller, shopping_list_controller
+import os
+from pathlib import Path
 
 # NOTE: Database tables are managed by Alembic migrations.
 # Automatic table creation has been removed to prevent inconsistencies and ensure proper migration tracking.
@@ -28,8 +30,10 @@ app.include_router(recipe_controller.router, prefix="/api")
 app.include_router(pantry_controller.router, prefix="/api")
 app.include_router(shopping_list_controller.router, prefix="/api")
 
-# Serve frontend static files
-app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
+# Serve frontend static files. If a production build exists in frontend/dist use it,
+# otherwise fall back to the development frontend folder so legacy files still work.
+frontend_static = "frontend/dist" if Path("frontend/dist").exists() else "frontend"
+app.mount("/", StaticFiles(directory=frontend_static, html=True), name="frontend")
 
 
 @app.get("/api/health")
