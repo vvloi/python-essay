@@ -17,9 +17,12 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-### 4. Chạy database migration
+### 4. Chạy database migration (Giống Liquibase update)
 ```powershell
+# Tạo tables + insert sample data
 alembic upgrade head
+
+# Xem chi tiết: ALEMBIC-GUIDE.md
 ```
 
 ### 5. Chạy ứng dụng

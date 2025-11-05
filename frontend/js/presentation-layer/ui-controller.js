@@ -1,6 +1,11 @@
 // Frontend 3-Layer Architecture
 // Presentation Layer - UI Components & Event Handlers
 
+import { stateManager } from '../business-layer/StateManager.js';
+import { RecipeService } from '../business-layer/RecipeService.js';
+import { PantryService } from '../business-layer/PantryService.js';
+import { ShoppingListService } from '../business-layer/ShoppingListService.js';
+
 class UIController {
     constructor() {
         this.currentView = 'recipes';
@@ -478,8 +483,10 @@ class UIController {
     }
 }
 
-// Initialize UI Controller
+// Initialize UI Controller and expose globally for inline event handlers
 let uiController;
 document.addEventListener('DOMContentLoaded', () => {
     uiController = new UIController();
+    // Make it globally accessible for inline onclick handlers
+    window.uiController = uiController;
 });
